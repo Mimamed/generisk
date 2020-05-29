@@ -6,24 +6,28 @@ import java.awt.event.ActionListener;
 public class Main
 {
 
-    static Timer tidtagaren = new Timer(1000, new räknaren());
-    static Nod<Integer> nod = new Nod<Integer>(1, null);
+    static Timer tidtagaren = new Timer(1000, new räknaren()); // här sätter jag upp en timer på en sekund
+    static Nod<Integer> nod = new Nod<Integer>(1, null);//skapar första noden ur min nod klass
     static Nod temp;
     static JFrame fön = new JFrame();
 
     public static void main(String[] args)
     {
+        //skapar en kedia av noder och ger varje en sin värde
         nod.läggTill(2);
         nod.läggTill(3);
         nod.läggTill(4);
         nod.läggTill(5);
         nod.läggTill("börjar om...");
-        nod.visaSist().sättPekare(nod.visaFörst());
-        nod.visaAllaData();
-        System.out.println("----------------------------------");
 
-        temp = nod.visaFörst();
-        tidtagaren.start();
+        //här gör jag så att sista nodens pekare pekar mot första noden och på detta sättet skapar en kedja som går i cirklar
+        nod.visaSist().sättPekare(nod.visaFörst());
+
+        //sätter upp timern
+        temp = nod.visaFörst();//sätter in noden timern ska börja med
+        tidtagaren.start();//startar timern
+
+        //skapar en osynlig fönster för att hindra avstängning
         fön.dispose();
         fön.setUndecorated(true);
         fön.setVisible(true);
@@ -35,10 +39,10 @@ public class Main
 
         public void actionPerformed(ActionEvent e)
         {
-            System.out.println(temp.visaData());
-            temp = temp.visaPekare();
+            System.out.println(temp.visaData());//timern räknar
+            temp = temp.visaPekare();//noden går ett steg framåt i kedian
 
-            tidtagaren.start();
+            tidtagaren.start();//startar timern igen
         }
     }
 }
